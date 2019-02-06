@@ -24,7 +24,9 @@ Button button;
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        Toast.makeText(this,"already login ",Toast.LENGTH_SHORT);
+        if(currentUser==null) {
+            Toast.makeText(this, "already login ", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -55,7 +57,7 @@ Button button;
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.i("TAG", "createUserWithEmail:success");
-                           Toast.makeText(MainActivity.this,"success",Toast.LENGTH_SHORT);
+                           Toast.makeText(MainActivity.this,"success",Toast.LENGTH_SHORT).show();
 
                         } else {
                             // If sign in fails, display a message to the user.
