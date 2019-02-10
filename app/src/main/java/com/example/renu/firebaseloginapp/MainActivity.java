@@ -24,7 +24,7 @@ Button button;
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser==null) {
+        if(currentUser!=null) {
             Toast.makeText(this, "already login ", Toast.LENGTH_SHORT).show();
         }
 
@@ -70,5 +70,37 @@ Button button;
                         // ...
                     }
                 });
+    }
+    public void onLogin(View view)
+    {
+        final String id=email.getText().toString();
+        final String pass=password.getText().toString();
+        mAuth.signInWithEmailAndPassword(id, pass)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("TAG", "signInWithEmail:success");
+
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String uid=user.getUid().toString();
+                           Toast.makeText(MainActivity.this,"Authsuccess",Toast.LENGTH_LONG).show();
+                            Log.d("renu2222","USER:"+uid);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.d("TAG", "signInWithEmail:failure", task.getException());
+                            Toast.makeText(MainActivity.this,"Authfail",Toast.LENGTH_LONG).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
+    public void logout(View view) {
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(this,"signout",Toast.LENGTH_LONG);
+        Log.d("bhanu111","logout");
     }
 }
